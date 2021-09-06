@@ -1,0 +1,39 @@
+******************* Counting the records in Access table ********************
+
+=DCount("[EmployeeCode]","ADP_declaration")
+
+******************* Inserting data from excel file to access table ********************
+
+DoCmd.TransferSpreadsheet acImport, , "SHAREPERK_MOTOR_ACC", Me.txtFileName6, True
+
+******************* Running Access SQL Queries ********************
+
+DoCmd.OpenQuery "ADP_Declaration_Data_Delete"
+
+******************* Running SQL Code ********************
+
+Dim qdef As DAO.QueryDef
+Set qdef = CurrentDb.CreateQueryDef("")
+qdef.Connect = CurrentDb.TableDefs("[DBO_T_TAX_PAYMASTER]").Connect
+qdef.SQL = "EXEC P_TAX_PAYMENT"
+qdef.ReturnsRecords = False  ''avoid 3065 error
+qdef.Execute
+MsgBox "Procedure completed successfully", vbInformation, "Confirmation"
+
+******************* Browsing file ********************
+
+    Dim diag As Office.FileDialog
+    Dim item As Variant
+    
+    Set diag = Application.FileDialog(msoFileDialogFilePicker)
+    diag.AllowMultiSelect = False
+    diag.Title = "Please select an Excel Spreadsheet"
+    diag.Filters.Clear
+    diag.Filters.Add "Excel Spreadsheets", "*.xls, *.xlsx, *.xlsb"
+    
+    If diag.Show Then
+        For Each item In diag.SelectedItems
+            Me.txtFileName1 = item
+        Next
+    
+    End If
