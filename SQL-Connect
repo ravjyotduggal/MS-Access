@@ -1,3 +1,10 @@
+*********************** References ****************************
+
+1. Microsoft Office 16.0 Object Library
+2. Microsoft Scripting Runtime
+
+************************ Code Below ****************************
+
 Public Function upload_data()
 
 Dim qdef As DAO.QueryDef
