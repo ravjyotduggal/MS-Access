@@ -1,0 +1,32 @@
+Public Function upload_data()
+
+Dim qdef As DAO.QueryDef
+Set qdef = CurrentDb.CreateQueryDef("")
+qdef.Connect = CurrentDb.TableDefs("[DBO_T_TAX_PAYM]").Connect
+qdef.SQL = "TRUNCATE TABLE T_TAX_PAYM"
+qdef.ReturnsRecords = False  ''avoid 3065 error
+qdef.Execute
+qdef.SQL = "TRUNCATE TABLE T_TAX_PAYS"
+qdef.ReturnsRecords = False  ''avoid 3065 error
+qdef.Execute
+qdef.SQL = "TRUNCATE TABLE T_TAX_ADP"
+qdef.ReturnsRecords = False  ''avoid 3065 error
+qdef.Execute
+qdef.SQL = "TRUNCATE TABLE T_TAX_NP_SETTLING"
+qdef.ReturnsRecords = False  ''avoid 3065 error
+qdef.Execute
+qdef.SQL = "TRUNCATE TABLE T_TAX_NPS_VPF_DECLARATIONS"
+qdef.ReturnsRecords = False  ''avoid 3065 error
+qdef.Execute
+qdef.SQL = "TRUNCATE TABLE T_TAX_SHAREPERK_MOTOR_ACC"
+qdef.ReturnsRecords = False  ''avoid 3065 error
+qdef.Execute
+
+DoCmd.OpenQuery "Insert_ADP"
+DoCmd.OpenQuery "Insert_NP"
+DoCmd.OpenQuery "Insert_NPS"
+DoCmd.OpenQuery "Insert_Paym"
+DoCmd.OpenQuery "Insert_Pays"
+DoCmd.OpenQuery "Insert_SHAREPERK"
+
+MsgBox "Hello, data has been uploaded to the server successfully", vbInformation, "Success"
